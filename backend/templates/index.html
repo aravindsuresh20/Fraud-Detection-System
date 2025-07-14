@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>FraudShield 
+ Transaction Security</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+ <!-- Custom Cursor -->
+ <div class="cursor"></div>
+ <div class="cursor-follower"></div>
+ <!-- Parallax Background Elements -->
+ <div class="parallax-bg">
+   <div class="bg-circle circle-1"></div>
+   <div class="bg-circle circle-2"></div>
+   <div class="bg-circle circle-3"></div>
+   <div class="bg-circle circle-4"></div>
+ </div>
+ <!-- Header -->
+ <header class="glass-header" style="background-color: black;">
+   <div class="logo-container">
+     <img src="/static/images/3.png" alt="FraudShield Logo" class="logo">
+   </div>
+ </header>
+ <!-- Main Content -->
+ <main class="container">
+ <section class="hero">
+   <h1 class="hero-title">
+     <span class="title-word title-word-1">Advanced</span>
+     <span class="title-word title-word-2">Fraud</span>
+     <span class="title-word title-word-3">Detection</span>
+     <span class="title-word title-word-4">System</span>
+   </h1>
+   <p class="hero-subtitle">Secure your transactions with our AI-powered fraud detection technology</p>
+ </section>
+ <section class="form-section">
+ <div class="form-container glass-card">
+   <h2>Transaction Analysis</h2>
+   <p class="form-description">Enter the transaction details to check for potential fraud</p>
+   <form method="POST" action="/predict" class="fraud-form">
+     <div class="form-group">
+       <label for="distance_from_home">Distance from Home (miles)</label>
+       <input type="number" step="any" id="distance_from_home" name="distance_from_home" value="{{ request.form.distance_from_home }}" required>
+     </div>
+     <div class="form-group">
+       <label for="distance_from_last_transaction">Distance from Last Transaction (miles)</label>
+       <input type="number" step="any" id="distance_from_last_transaction" name="distance_from_last_transaction" value="{{ request.form.distance_from_last_transaction }}" required>
+     </div>
+     <div class="form-group">
+       <label for="ratio_to_median_purchase_price">Ratio to Median Purchase Price</label>
+       <input type="number" step="any" id="ratio_to_median_purchase_price" name="ratio_to_median_purchase_price" value="{{ request.form.ratio_to_median_purchase_price }}" required>
+     </div>
+     <div class="form-row">
+       <div class="form-group">
+         <label for="repeat_retailer">Repeat Retailer</label>
+         <select id="repeat_retailer" name="repeat_retailer" required>
+           <option value="1" {% if request.form.repeat_retailer == '1' %}selected{% endif %}>Yes</option>
+           <option value="0" {% if request.form.repeat_retailer == '0' %}selected{% endif %}>No</option>
+         </select>
+       </div>
+       <div class="form-group">
+         <label for="used_chip">Used Chip</label>
+         <select id="used_chip" name="used_chip" required>
+           <option value="1" {% if request.form.used_chip == '1' %}selected{% endif %}>Yes</option>
+           <option value="0" {% if request.form.used_chip == '0' %}selected{% endif %}>No</option>
+         </select>
+       </div>
+     </div>
+     <div class="form-row">
+       <div class="form-group">
+         <label for="used_pin_number">Used PIN</label>
+         <select id="used_pin_number" name="used_pin_number" required>
+           <option value="1" {% if request.form.used_pin_number == '1' %}selected{% endif %}>Yes</option>
+           <option value="0" {% if request.form.used_pin_number == '0' %}selected{% endif %}>No</option>
+         </select>
+       </div>
+       <div class="form-group">
+         <label for="online_order">Online Order</label>
+         <select id="online_order" name="online_order" required>
+           <option value="1" {% if request.form.online_order == '1' %}selected{% endif %}>Yes</option>
+           <option value="0" {% if request.form.online_order == '0' %}selected{% endif %}>No</option>
+         </select>
+       </div>
+     </div>
+     <button type="submit" class="submit-btn">
+       <span>Analyze Transaction</span>
+       <i class="fas fa-shield-alt"></i>
+     </button>
+   </form>
+
+   <!-- Home Button -->
+   <div style="margin-top: 20px; text-align: center;">
+     <a href="/" class="submit-btn" style="text-decoration: none;">
+       <span>Home</span>
+       <i class="fas fa-home"></i>
+     </a>
+   </div>
+
+   {% if prediction_text %}
+   <div class="result-container fade-in">
+     <div class="result-card {{ 'fraud' if 'FRAUD' in prediction_text else 'not-fraud' }}">
+       <i class="fas {{ 'fa-times-circle' if 'FRAUD' in prediction_text else 'fa-check-circle' }}"></i>
+       <p>{{ prediction_text }}</p>
+     </div>
+   </div>
+   {% endif %}
+ </div>
+ </section>
+ </main>
+<!-- Footer -->
+<div class="footer-bottom" style="max-width: 800px; margin: 40px auto 20px auto; padding-right: 0px;padding-left: 9%; font-size: 14px; color: #f00c0c; text-align: center; position: relative; top: 1px;">
+<p style="margin: 0;">Powered by Aravind Suresh</p>
+</div>
+<script src="/static/js/script.js"></script>
+</body>
+</html>
+ 
